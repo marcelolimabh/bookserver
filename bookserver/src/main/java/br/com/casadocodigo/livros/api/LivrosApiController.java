@@ -15,29 +15,29 @@ import br.com.casadocodigo.usuarios.Usuario;
 import br.com.casadocodigo.usuarios.Usuarios;
 
 @RestController
-@RequestMapping({ "/api/livros", "/api/v2/livros" })
+@RequestMapping({"/api/livros", "/api/v2/livros"})
 public class LivrosApiController {
 
-	@Autowired
-	private Usuarios usuarios;
+    @Autowired
+    private Usuarios usuarios;
 
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> livros() {
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> livros() {
 
-		Estante estante = donoDosLivros().getEstante();
+        Estante estante = donoDosLivros().getEstante();
 
-		if (estante.temLivros()) {
-			return new ResponseEntity<>(estante.todosLivros(), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		}
+        if (estante.temLivros()) {
+            return new ResponseEntity<>(estante.todosLivros(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
 
-	}
+    }
 
-	private Usuario donoDosLivros() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		ResourceOwner donoDosLivros = (ResourceOwner) authentication.getPrincipal();
+    private Usuario donoDosLivros() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ResourceOwner donoDosLivros = (ResourceOwner) authentication.getPrincipal();
 
-		return usuarios.buscarPorID(donoDosLivros.getId());
-	}
+        return usuarios.buscarPorID(donoDosLivros.getId());
+    }
 }
